@@ -77,7 +77,7 @@ lb_interface.grid(columnspan = 5,pady = yPad, padx = xPad,sticky = (tk.E,tk.S))
 for i in range(len(intefaceList)):
     lb_interface.insert(i,intefaceList[i])
 
-lb_interface.grid(column = 1)
+lb_interface.grid(column = 0)
 for i in range(0,len(intefaceList),2):
      lb_interface.itemconfigure(i, background='#f0f0ff')
 
@@ -87,11 +87,17 @@ btn_SetIP.grid(row = RAWnum , column = 2, pady=yPad, padx = xPad, sticky=tk.E+tk
 btn_SetIP.config( height = 1, width = 15 )
 
 RAWnum+=1
-lbl_IP = tk.Label(root, text ="enter new IP address", font = fontStyleL)
+lbl_IP = tk.Label(root, text ="New IP address", font = fontStyle)
 lbl_IP.grid(row = RAWnum, column = 0, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 var_IP = tk.StringVar()
 entry_IP = tk.Entry(root, textvariable =var_IP, width = 15 , font = fontStyle)
 entry_IP.grid(row = RAWnum, column = 2, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 
+RAWnum+=1
+lbl_GW = tk.Label(root, text ="New gateway", font = fontStyle)
+lbl_GW.grid(row = RAWnum, column = 0, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
+var_GW = tk.StringVar()
+entry_GW = tk.Entry(root, textvariable =var_GW, width = 15 , font = fontStyle)
+entry_GW.grid(row = RAWnum, column = 2, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 
 root.mainloop( )
