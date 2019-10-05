@@ -37,3 +37,12 @@ def getInterfaceNames():
             interfaceName = interfaceName.strip('\r')
             interfaceList.append(interfaceName)
     return(interfaceList)
+
+def sendCMD(command):
+        try:
+            resp = subprocess.check_output(command, shell=True) ## Run as an admin!?
+            print(resp)
+            return(True)
+        except:
+            print(command)
+            return(False)
