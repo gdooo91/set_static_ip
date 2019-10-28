@@ -1,9 +1,9 @@
 ## GUI the makes changing the static IP address in windows easy and quick.
 
-import tkinter as tk # to make the GUI
-from tkinter import ttk
-import os # to excue command line funtions
-from netsh_set import getInterfaceNames, sendCMD
+import tkinter as tk                    ## to make the GUI
+from tkinter import ttk                 ## << !
+import os                               ## to excue command line funtions
+from netsh_set import getInterfaceNames, sendCMD, makeBackup
 
 class selectedInterface:
     def __init__(self, Name= None, ID = None, IP = None, gateWay = '255.255.255.0'):
@@ -64,7 +64,7 @@ interface = selectedInterface()
 intefaceList = getInterfaceNames()
 
 
-
+makeBackup() # makes a backup at start of the program
 
 ## 
 ## command that will chagne the ip address
@@ -120,4 +120,7 @@ btn_SetIP.grid(row = RAWnum , column = 2, pady=yPad, padx = xPad, sticky=tk.E+tk
 btn_SetIP.config( height = 1, width = 15 )
 
 
+btn_backUp = tk.Button(root, text = 'Backup network settings' ,  command = lambda:makeBackup())
+btn_backUp.grid(row = RAWnum , column = 0, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
+btn_backUp.config( height = 1, width = 15 )
 root.mainloop( )

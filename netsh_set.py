@@ -2,6 +2,7 @@
 
 import subprocess   #
 import re           # to clean strings
+from datetime import datetime               ## used to name the backup file!
 
 def getInterfaceNames():
     CmdLineOutput = subprocess.check_output("netsh interface ipv4 show interfaces", shell=True)
@@ -46,3 +47,10 @@ def sendCMD(command):
         except:
             print(command)
             return(False)
+
+
+def makeBackup ():
+
+    timeNow = datetime.now()
+    filename = "backup("+str(timeNow.strftime("%d-%m-%Y_%H.%M.%S"))+").dat"
+    return(sendCMD("netsh dump >"+filename))
