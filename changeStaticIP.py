@@ -3,7 +3,7 @@
 import tkinter as tk                    ## to make the GUI
 from tkinter import ttk                 ## << !
 import os                               ## to excue command line funtions
-from netsh_set import getInterfaceNames, sendCMD, makeBackup
+from netsh_set import getInterfaceNames, sendCMD, makeBackup, restorBackup
 
 class selectedInterface:
     def __init__(self, Name= None, ID = None, IP = None, gateWay = '255.255.255.0'):
@@ -74,7 +74,7 @@ makeBackup() # makes a backup at start of the program
 
 root = tk.Tk()
 root.title("Static IP Setup")
-root.geometry('370x350')        # Window Size
+root.geometry('370x390')        # Window Size
 root.resizable(False, False)    # Force the window to a fixed size
 fontStyle = ("Courier", 11)
 xPad = 20
@@ -85,7 +85,7 @@ RAWnum = 0
 # print(root.winfo_width())
 lb_interface = tk.Listbox(root,exportselection = False)
 lb_interface.configure(width = 50)
-lb_interface.grid(columnspan = 5,pady = yPad, padx = xPad,sticky = (tk.E,tk.S))
+lb_interface.grid(row = RAWnum, column = 0, columnspan = 3,pady = yPad, padx = xPad,sticky = (tk.E,tk.S))
 numbUsableInterface = 0 
 for i in range(len(intefaceList)):
     if "Loopback" in intefaceList[i]:
@@ -103,24 +103,31 @@ lbl_IP = tk.Label(root, text ="New IP address", font = fontStyle)
 lbl_IP.grid(row = RAWnum, column = 0, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 var_IP = tk.StringVar()
 entry_IP = tk.Entry(root, textvariable =var_IP, width = 15 , font = fontStyle)
-entry_IP.grid(row = RAWnum, column = 2, pady=yPad, padx = xPad, sticky=tk.W)
+entry_IP.grid(row = RAWnum, column = 1, pady=yPad, padx = xPad, sticky=tk.W)
 
 RAWnum+=1
 lbl_GW = tk.Label(root, text ="New gateway", font = fontStyle)
 lbl_GW.grid(row = RAWnum, column = 0, pady=yPad, padx = xPad, sticky=tk.W)
 var_GW = tk.StringVar()
 entry_GW = tk.Entry(root, textvariable =var_GW, width = 15 , font = fontStyle)
-entry_GW.grid(row = RAWnum, column = 2, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
+entry_GW.grid(row = RAWnum, column = 1, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
+
+RAWnum+=1
+lbl_backupRestor = tk.Label(root, text ="backup Restor", font = fontStyle)
+lbl_backupRestor.grid(row = RAWnum, column = 0, pady=yPad, padx = xPad, sticky=tk.W)
+var_backupRestor = tk.StringVar()
+entry_BackupRestor = tk.Entry(root, textvariable =var_backupRestor, width = 15 , font = fontStyle)
+entry_BackupRestor.grid(row = RAWnum, column = 1, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 
 RAWnum+=1
 btn_SetIP = tk.Button(root, text = 'Select interface' , 
     #command = lambda:interface.setInterface(lb_interface.selection_get(),var_IP.get(),var_GW.get()))#,font = fontStyle)
     command = lambda:interface.setInterface(lb_interface.get('sel.first','sel.last'),var_IP.get(),var_GW.get()))
-btn_SetIP.grid(row = RAWnum , column = 2, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
+btn_SetIP.grid(row = RAWnum , column = 1, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 btn_SetIP.config( height = 1, width = 15 )
 
 
-btn_backUp = tk.Button(root, text = 'Backup network settings' ,  command = lambda:makeBackup())
+btn_backUp = tk.Button(root, text = 'Backup network settings' ,  command = lambda:restorBackup(var_backupRestor.get()))
 btn_backUp.grid(row = RAWnum , column = 0, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 btn_backUp.config( height = 1, width = 15 )
 root.mainloop( )

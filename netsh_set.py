@@ -54,3 +54,6 @@ def makeBackup ():
     timeNow = datetime.now()
     filename = "backup("+str(timeNow.strftime("%d-%m-%Y_%H.%M.%S"))+").dat"
     return(sendCMD("netsh dump >"+filename))
+
+def restorBackup (filename): 
+    return(sendCMD("netsh exec "+filename))
