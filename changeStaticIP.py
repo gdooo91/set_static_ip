@@ -46,7 +46,6 @@ class selectedInterface:
             if (self.setIpAddress(newIP)== True):
                 setCMD = "netsh interface ipv4 set address name= " + self.Name + " static " +self.IP+ " " + newGW + " "
                 #
-                # setCMD = "echo: HAHA this works!"
                 if(sendCMD(setCMD) == True):
                     print("SET!")
                 else :
@@ -113,21 +112,27 @@ entry_GW = tk.Entry(root, textvariable =var_GW, width = 15 , font = fontStyle)
 entry_GW.grid(row = RAWnum, column = 1, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 
 RAWnum+=1
-lbl_backupRestor = tk.Label(root, text ="backup Restor", font = fontStyle)
+lbl_backupRestor = tk.Label(root, text ="Backup file link", font = fontStyle)
 lbl_backupRestor.grid(row = RAWnum, column = 0, pady=yPad, padx = xPad, sticky=tk.W)
 var_backupRestor = tk.StringVar()
 entry_BackupRestor = tk.Entry(root, textvariable =var_backupRestor, width = 15 , font = fontStyle)
 entry_BackupRestor.grid(row = RAWnum, column = 1, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 
 RAWnum+=1
-btn_SetIP = tk.Button(root, text = 'Select interface' , 
+btn_SetIP = tk.Button(root, text = 'Select interface', 
     #command = lambda:interface.setInterface(lb_interface.selection_get(),var_IP.get(),var_GW.get()))#,font = fontStyle)
-    command = lambda:interface.setInterface(lb_interface.get('sel.first','sel.last'),var_IP.get(),var_GW.get()))
+    #command = lambda:interface.setInterface(lb_interface.get('sel.first','sel.last'),var_IP.get(),var_GW.get()))
+    command = lambda:interface.setInterface( 
+        lb_interface.get(lb_interface.curselection())
+        , var_IP.get()
+        ,var_GW.get()
+    ))
+    
 btn_SetIP.grid(row = RAWnum , column = 1, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 btn_SetIP.config( height = 1, width = 15 )
 
 
-btn_backUp = tk.Button(root, text = 'Backup network settings' ,  command = lambda:restorBackup(var_backupRestor.get()))
+btn_backUp = tk.Button(root, text = 'Restor Backup' ,  command = lambda:restorBackup(var_backupRestor.get()))
 btn_backUp.grid(row = RAWnum , column = 0, pady=yPad, padx = xPad, sticky=tk.E+tk.W)
 btn_backUp.config( height = 1, width = 15 )
 root.mainloop( )
